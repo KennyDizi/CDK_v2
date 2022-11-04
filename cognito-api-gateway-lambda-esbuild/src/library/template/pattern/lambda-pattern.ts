@@ -22,6 +22,7 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import { S3EventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
+import { TypeScriptCode } from "@mrgrain/cdk-esbuild";
 
 export interface LambdaPatternConstructProps {
     projectFullName: string;
@@ -53,10 +54,11 @@ export class LambdaPattern extends Construct {
 
     private createLambda(lambdaName: string, lambdaPath: string, lambdaRole: iam.Role, props: LambdaPatternConstructProps): lambda.Function {
         var layers = this.loadLayers(lambdaName, props.layerArns!);
+        const bundledCode = new TypeScriptCode(lambdaPath);
 
         const lambdaFunction = new lambda.Function(this, lambdaName, {
             functionName: lambdaName,
-            code: lambda.Code.fromAsset(lambdaPath),
+            code: bundledCode,
             handler: props.handler != undefined ? props.handler : 'handler.handle',
             runtime: lambda.Runtime.PYTHON_3_7,
             timeout: props.timeout != undefined ? props.timeout : cdk.Duration.seconds(60 * 3),
