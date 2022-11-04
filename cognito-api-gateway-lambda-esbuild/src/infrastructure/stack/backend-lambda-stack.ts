@@ -3,6 +3,7 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as base from '../../library/template/stack/base/base-stack';
 import { AppContext } from '../../library/template/app-context';
 
+import { TypeScriptCode } from "@mrgrain/cdk-esbuild";
 
 export class BackendLambdaStack extends base.BaseStack {
 
@@ -17,10 +18,12 @@ export class BackendLambdaStack extends base.BaseStack {
     }
 
     private createLambdaFunction(baseName: string): lambda.Function {
+        const lambdaPath = `src/handlers/${baseName}`;
+        const bundledCode = new TypeScriptCode(lambdaPath);
         const func = new lambda.Function(this, `${baseName}-func`, {
             functionName: `${this.projectPrefix}-${baseName}-func`,
-            runtime: lambda.Runtime.NODEJS_12_X,
-            code: lambda.Code.fromAsset(`codes/lambda/${baseName}/src`),
+            runtime: lambda.Runtime.NODEJS_16_X,
+            code: bundledCode,
             handler: 'index.handle',
         });
 

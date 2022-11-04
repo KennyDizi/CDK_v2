@@ -6,7 +6,6 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as base from '../../library/template/stack/base/base-stack';
 import { AppContext } from '../../library/template/app-context';
 
-
 export class RestApigatewayStack extends base.BaseStack {
     readonly restApi: apigateway.RestApi;
     readonly restApiRole: iam.Role;
