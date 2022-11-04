@@ -24,7 +24,7 @@ export class BackendLambdaStack extends base.BaseStack {
             functionName: `${this.projectPrefix}-${baseName}-func`,
             runtime: lambda.Runtime.NODEJS_16_X,
             code: bundledCode,
-            handler: 'index.handle',
+            handler: 'handle',
         });
 
         return func;
