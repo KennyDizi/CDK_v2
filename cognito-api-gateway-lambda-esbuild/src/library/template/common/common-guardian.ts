@@ -45,12 +45,12 @@ export class CommonGuardian implements ICommonGuardian {
     }
 
     createS3BucketName(baseName: string): string {
-        const suffix: string = `${this.props.env?.region}-${this.props.env?.account?.substr(0, 5)}`
+        const suffix: string = `${this.props.env?.region}-${this.props.env?.account?.substring(0, 5)}`
         return `${this.stackName}-${baseName}-${suffix}`.toLowerCase().replace('_', '-');
     }
 
     createS3Bucket(baseName: string, encryption?: s3.BucketEncryption, versioned?: boolean): s3.Bucket {
-        const suffix: string = `${this.props.env?.region}-${this.props.env?.account?.substr(0, 5)}`
+        const suffix: string = `${this.props.env?.region}-${this.props.env?.account?.substring(0, 5)}`
 
         const s3Bucket = new s3.Bucket(this.props.construct, `${baseName}-bucket`, {
             bucketName: `${this.stackName}-${baseName}-${suffix}`.toLowerCase().replace('_', '-'),

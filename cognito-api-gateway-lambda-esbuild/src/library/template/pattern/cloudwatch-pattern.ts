@@ -66,7 +66,7 @@ export class CloudWatchPattern extends Construct {
     }
 
     public createWidget2(name: string, metrics: cloudwatch.IMetric[], width?: number): cloudwatch.GraphWidget {
-        const widget = new cloudwatch.GraphWidget({ 
+        const widget = new cloudwatch.GraphWidget({
             title: name,
             left: metrics,
             width: width,

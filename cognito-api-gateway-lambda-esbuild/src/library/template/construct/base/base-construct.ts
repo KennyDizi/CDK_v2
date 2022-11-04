@@ -23,7 +23,6 @@ import * as s3 from 'aws-cdk-lib/aws-s3'
 import { CommonHelper, ICommonHelper } from '../../common/common-helper'
 import { CommonGuardian, ICommonGuardian } from '../../common/common-guardian'
 
-
 export interface ConstructCommonProps {
     stackConfig: any;
     stackName: string;
@@ -96,4 +95,4 @@ export class BaseConstruct extends Construct implements ICommonHelper, ICommonGu
     createS3Bucket(baseName: string, encryption?: s3.BucketEncryption, versioned?: boolean): s3.Bucket {
         return this.commonGuardian.createS3Bucket(baseName, encryption, versioned);
     }
-} 
+}
