@@ -60,7 +60,7 @@ export class LambdaPattern extends Construct {
             functionName: lambdaName,
             code: bundledCode,
             handler: props.handler != undefined ? props.handler : 'handler.handle',
-            runtime: lambda.Runtime.PYTHON_3_7,
+            runtime: lambda.Runtime.NODEJS_16_X,
             timeout: props.timeout != undefined ? props.timeout : cdk.Duration.seconds(60 * 3),
             role: lambdaRole,
             environment: props.environments,
