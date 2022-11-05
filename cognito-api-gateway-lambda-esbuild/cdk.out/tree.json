@@ -1,0 +1,29 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.149"
+        }
+      },
+      "CL_CDK_For_Xdevelopment-OAuthCognitoStack": {
+        "id": "CL_CDK_For_Xdevelopment-OAuthCognitoStack",
+        "path": "CL_CDK_For_Xdevelopment-OAuthCognitoStack",
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.50.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.50.0"
+    }
+  }
+}
