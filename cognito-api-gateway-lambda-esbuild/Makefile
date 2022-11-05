@@ -36,7 +36,7 @@ destroy_stacks-staging:
 
 .PHONY: setup_initial-production
 setup_initial-production:
-	sh script/setup_initial.sh src/configurations/app-config-staging.json
+	sh script/setup_initial.sh src/configurations/app-config-production.json
 
 .PHONY: deploy_stacks-production
 deploy_stacks-production:

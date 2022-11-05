@@ -1,7 +1,7 @@
 {
     "Project": {
         "Name": "CL_CDK_For_X",
-        "Stage": "development",
+        "Stage": "production",
         "Account": "75157*******",
         "Region": "eu-central-1",
         "Profile": "cdk-demo"
