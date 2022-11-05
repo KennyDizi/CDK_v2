@@ -2,6 +2,9 @@
   "name": "cognito-api-gateway-lambda-esbuild",
   "version": "1.0.0",
   "description": "CDK v2 for API Gateway, Cognito and Lambdas",
+  "bin": {
+    "machine-2-machine-authorization": "src/infrastructure/app-main.js"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
