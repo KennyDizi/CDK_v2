@@ -18,7 +18,7 @@ export class BackendLambdaStack extends base.BaseStack {
     }
 
     private createLambdaFunction(baseName: string): lambda.Function {
-        const lambdaPath = `src/handlers/${baseName}`;
+        const lambdaPath = `./src/handlers/${baseName}`;
         const bundledCode = new TypeScriptCode(lambdaPath);
         const func = new lambda.Function(this, `${baseName}-func`, {
             functionName: `${this.projectPrefix}-${baseName}-func`,

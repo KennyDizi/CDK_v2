@@ -7,7 +7,6 @@ PROJECT_NAME=$(cat $APP_CONFIG | jq -r '.Project.Name') #ex> IoTData
 PROJECT_STAGE=$(cat $APP_CONFIG | jq -r '.Project.Stage') #ex> Dev
 PROFILE_NAME=$(cat $APP_CONFIG | jq -r '.Project.Profile') #ex> cdk-demo
 
-
 echo ==--------ConfigInfo---------==
 echo $APP_CONFIG
 echo $PROJECT_NAME

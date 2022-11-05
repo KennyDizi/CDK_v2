@@ -12,8 +12,8 @@ jq --version
 
 ACCOUNT=$(cat $APP_CONFIG | jq -r '.Project.Account') #ex> 123456789123
 REGION=$(cat $APP_CONFIG | jq -r '.Project.Region') #ex> us-east-1
+REGION2=$(cat $APP_CONFIG | jq -r '.Project.Region2') #ex> eu-central-1
 PROFILE_NAME=$(cat $APP_CONFIG | jq -r '.Project.Profile') #ex> cdk-demo
-
 
 echo ==--------ConfigInfo---------==
 echo $APP_CONFIG

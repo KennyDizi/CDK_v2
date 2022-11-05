@@ -4,6 +4,7 @@
         "Stage": "development",
         "Account": "693573057868",
         "Region": "eu-central-1",
+        "Region2": "ap-southeast-1",
         "Profile": "facial_dev_devops"
     },
 
