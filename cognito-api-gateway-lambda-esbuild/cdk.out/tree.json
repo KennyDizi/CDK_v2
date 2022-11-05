@@ -542,6 +542,9 @@
                         "Arn"
                       ]
                     },
+                    "architectures": [
+                      "arm64"
+                    ],
                     "functionName": "CLAppdevelopment-book-api-func",
                     "handler": "handle",
                     "runtime": "nodejs16.x"
@@ -684,6 +687,9 @@
                         "Arn"
                       ]
                     },
+                    "architectures": [
+                      "arm64"
+                    ],
                     "functionName": "CLAppdevelopment-user-api-func",
                     "handler": "handle",
                     "runtime": "nodejs16.x"

@@ -4,6 +4,7 @@ import * as base from '../../library/template/stack/base/base-stack';
 import { AppContext } from '../../library/template/app-context';
 
 import { TypeScriptCode } from "@mrgrain/cdk-esbuild";
+import { Architecture } from 'aws-cdk-lib/aws-lambda';
 
 export class BackendLambdaStack extends base.BaseStack {
 
@@ -25,6 +26,7 @@ export class BackendLambdaStack extends base.BaseStack {
             runtime: lambda.Runtime.NODEJS_16_X,
             code: bundledCode,
             handler: 'handle',
+            architecture: Architecture.ARM_64
         });
 
         return func;
