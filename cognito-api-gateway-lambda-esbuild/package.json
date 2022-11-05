@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@aws-cdk/core": "^1.180.0",
-    "@mrgrain/cdk-esbuild": "^3.11.3",
+    "@mrgrain/cdk-esbuild": "^3.11.4",
     "aws-cdk-lib": "2.50.0",
     "constructs": "^10.1.150",
     "env-var": "7.3.0",

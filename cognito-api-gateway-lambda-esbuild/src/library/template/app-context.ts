@@ -23,7 +23,6 @@ import * as cdk from 'aws-cdk-lib';
 import { AppConfig } from './app-config';
 import { StackCommonProps } from './stack/base/base-stack';
 
-
 export class AppContextError extends Error {
     constructor(message: string) {
         super(message);
@@ -54,8 +53,8 @@ export class AppContext {
             }
 
         } catch (e) {
-            console.error(`==> CDK App-Config File is empty, 
-            set up your environment variable(Usage: export ${props.appConfigFileKey}=config/app-config-xxx.json) 
+            console.error(`==> CDK App-Config File is empty,
+            set up your environment variable(Usage: export ${props.appConfigFileKey}=config/app-config-xxx.json)
             or append inline-argurment(Usage: cdk list --context ${props.appConfigFileKey}=config/app-config-xxx.json)`);
             throw new AppContextError('Fail to find App-Config json file');
         }
