@@ -1,0 +1,422 @@
+{
+  "version": "21.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "CLAppdevelopment-OAuthCognitoStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CLAppdevelopment-OAuthCognitoStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CLAppdevelopment-OAuthCognitoStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://693573057868/eu-central-1",
+      "properties": {
+        "templateFile": "CLAppdevelopment-OAuthCognitoStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-deploy-role-693573057868-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-cfn-exec-role-693573057868-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-693573057868-eu-central-1/65401d8a8bb5f25b104571ad385fe47257aa1ef2a6910df92875a45d89f0a378.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CLAppdevelopment-OAuthCognitoStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-lookup-role-693573057868-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CLAppdevelopment-OAuthCognitoStack.assets"
+      ],
+      "metadata": {
+        "/CLAppdevelopment-OAuthCognitoStack/UserPool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPool6BA7E5F2"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/UserPool/DomainName/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPoolDomainNameEFB8D908"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/UserPool/ResourceServer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPoolResourceServer05D1463A"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/UserPool/OAuthClient/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPoolOAuthClient8E1CDCB0"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/CognitoUserPoolId/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CognitoUserPoolIdE8BC6937"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/Output-CognitoUserPoolDomainName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OutputCognitoUserPoolDomainName"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/Output-ScopeBookGetName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OutputScopeBookGetName"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/ScopeBookGetName/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ScopeBookGetName152C0AFD"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/Output-ScopeBookPostName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OutputScopeBookPostName"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/ScopeBookPostName/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ScopeBookPostName8DC4FE63"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/Output-ScopeUserGetName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OutputScopeUserGetName"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/ScopeUserGetName/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ScopeUserGetNameAE9ECA1C"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/Output-ScopeUserPostName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OutputScopeUserPostName"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/ScopeUserPostName/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ScopeUserPostName8084BD8B"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CLAppdevelopment-OAuthCognitoStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CLAppdevelopment-OAuthCognitoStack"
+    },
+    "CLAppdevelopment-BackendLambdaStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CLAppdevelopment-BackendLambdaStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CLAppdevelopment-BackendLambdaStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://693573057868/eu-central-1",
+      "properties": {
+        "templateFile": "CLAppdevelopment-BackendLambdaStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-deploy-role-693573057868-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-cfn-exec-role-693573057868-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-693573057868-eu-central-1/6dbf1c4a330523cbb6eda25debc0bb15b29b52ec2f3a53e7a3beff8c301a8453.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CLAppdevelopment-BackendLambdaStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-lookup-role-693573057868-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CLAppdevelopment-BackendLambdaStack.assets"
+      ],
+      "metadata": {
+        "/CLAppdevelopment-BackendLambdaStack/book-api-func/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bookapifuncServiceRole71EBFF13"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/book-api-func/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bookapifuncA1B941A7"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/BackendLambdaBookArn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BackendLambdaBookArnE59F44CE"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/user-api-func/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userapifuncServiceRoleB431F559"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/user-api-func/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userapifuncC8DEF36E"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/BackendLambdaUserArn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BackendLambdaUserArn5D59CE61"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CLAppdevelopment-BackendLambdaStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CLAppdevelopment-BackendLambdaStack"
+    },
+    "CLAppdevelopment-RestApigatewayStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CLAppdevelopment-RestApigatewayStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CLAppdevelopment-RestApigatewayStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://693573057868/eu-central-1",
+      "properties": {
+        "templateFile": "CLAppdevelopment-RestApigatewayStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-deploy-role-693573057868-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-cfn-exec-role-693573057868-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-693573057868-eu-central-1/76282cb8577576897220faf1a433e298cc9ebcc3b768e611aae96aaa3298691d.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CLAppdevelopment-RestApigatewayStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-lookup-role-693573057868-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CLAppdevelopment-RestApigatewayStack.assets"
+      ],
+      "metadata": {
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIs9C880FF1"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsCloudWatchRole9D502FE8"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsAccount65AC15A0"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsDeployment781C9FFE1f68ea61c79abc72c0a62d4e53ae48a4"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/DeploymentStage.development/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsDeploymentStagedevelopment26680B7C"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsEndpoint008FA1B6"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsbook9E8B5C67"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsbookGET7019625D"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsbookPOST39E152A2"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsuser1CBFD157"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsuserGET348F95B7"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsuserPOST6E9A39B2"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/REST-APIsRestApiUrl/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIsRestApiUrl2629407C"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-CognitoUserPoolId:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueCLAppdevelopmentCognitoUserPoolIdC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/Authorizer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuthorizerBD825682"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/GatewayIntegrationRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GatewayIntegrationRole027D7AE3"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-BackendLambdaBookArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueCLAppdevelopmentBackendLambdaBookArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeBookGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueCLAppdevelopmentScopeBookGetNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeBookPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueCLAppdevelopmentScopeBookPostNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-BackendLambdaUserArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueCLAppdevelopmentBackendLambdaUserArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeUserGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueCLAppdevelopmentScopeUserGetNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeUserPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueCLAppdevelopmentScopeUserPostNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CLAppdevelopment-RestApigatewayStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CLAppdevelopment-RestApigatewayStack"
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+ "Resources": {
+  "bookapifuncServiceRole71EBFF13": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-BackendLambdaStack/book-api-func/ServiceRole/Resource"
+   }
+  },
+  "bookapifuncA1B941A7": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-693573057868-eu-central-1",
+     "S3Key": "11e042fcc88199e16407fe68822baeefa5508d6fb862317205d86eea5a6b17af.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "bookapifuncServiceRole71EBFF13",
+      "Arn"
+     ]
+    },
+    "FunctionName": "CLAppdevelopment-book-api-func",
+    "Handler": "handle",
+    "Runtime": "nodejs16.x"
+   },
+   "DependsOn": [
+    "bookapifuncServiceRole71EBFF13"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-BackendLambdaStack/book-api-func/Resource",
+    "aws:asset:path": "/Volumes/Data/OpenSources/AWS_CDK_v2/AWS_CDK/CDK_v2/cognito-api-gateway-lambda-esbuild",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "TypeScriptCode"
+   }
+  },
+  "BackendLambdaBookArnE59F44CE": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::GetAtt": [
+      "bookapifuncA1B941A7",
+      "Arn"
+     ]
+    },
+    "Name": "CLAppdevelopment-BackendLambdaBookArn"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-BackendLambdaStack/BackendLambdaBookArn/Resource"
+   }
+  },
+  "userapifuncServiceRoleB431F559": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-BackendLambdaStack/user-api-func/ServiceRole/Resource"
+   }
+  },
+  "userapifuncC8DEF36E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-693573057868-eu-central-1",
+     "S3Key": "93cd86f5ed02795bd826b0036a55186de1960049f2d9863c654e5b9f9d949d9b.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "userapifuncServiceRoleB431F559",
+      "Arn"
+     ]
+    },
+    "FunctionName": "CLAppdevelopment-user-api-func",
+    "Handler": "handle",
+    "Runtime": "nodejs16.x"
+   },
+   "DependsOn": [
+    "userapifuncServiceRoleB431F559"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-BackendLambdaStack/user-api-func/Resource",
+    "aws:asset:path": "/Volumes/Data/OpenSources/AWS_CDK_v2/AWS_CDK/CDK_v2/cognito-api-gateway-lambda-esbuild",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "TypeScriptCode"
+   }
+  },
+  "BackendLambdaUserArn5D59CE61": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::GetAtt": [
+      "userapifuncC8DEF36E",
+      "Arn"
+     ]
+    },
+    "Name": "CLAppdevelopment-BackendLambdaUserArn"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-BackendLambdaStack/BackendLambdaUserArn/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/z2NTQ6CMBCFz8K+jIB6ADFxbfAAZigjKdA26bS6aHp3W42u3k9evtfBsYGmwhfXclrrTY0Qbx7lKnJ1jxvqcUKIl2CkV9aI88P8fBIKNcTBblTqoknwHvogV/I9MglmXXBOmfmKDjV5cmX7DymJEzP5fDnn0YdDbIOTmWXsRLDw7tkeoGuhrRZWqnbBeKUJhq++AZ/iejbBAAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-BackendLambdaStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

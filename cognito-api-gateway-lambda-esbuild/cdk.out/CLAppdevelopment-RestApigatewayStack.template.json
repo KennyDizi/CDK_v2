@@ -1,0 +1,531 @@
+{
+ "Resources": {
+  "RESTAPIs9C880FF1": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Description": "This is a public REST APIs, but clients must have a valid access-token with scopes",
+    "Name": "CLAppdevelopment-REST-APIs"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Resource"
+   }
+  },
+  "RESTAPIsCloudWatchRole9D502FE8": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/CloudWatchRole/Resource"
+   }
+  },
+  "RESTAPIsAccount65AC15A0": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "RESTAPIsCloudWatchRole9D502FE8",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "RESTAPIs9C880FF1"
+   ],
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Account"
+   }
+  },
+  "RESTAPIsDeployment781C9FFE1f68ea61c79abc72c0a62d4e53ae48a4": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    },
+    "Description": "This is a public REST APIs, but clients must have a valid access-token with scopes"
+   },
+   "DependsOn": [
+    "RESTAPIsbookGET7019625D",
+    "RESTAPIsbookPOST39E152A2",
+    "RESTAPIsbook9E8B5C67",
+    "RESTAPIsuserGET348F95B7",
+    "RESTAPIsuserPOST6E9A39B2",
+    "RESTAPIsuser1CBFD157"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Deployment/Resource"
+   }
+  },
+  "RESTAPIsDeploymentStagedevelopment26680B7C": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    },
+    "DeploymentId": {
+     "Ref": "RESTAPIsDeployment781C9FFE1f68ea61c79abc72c0a62d4e53ae48a4"
+    },
+    "MethodSettings": [
+     {
+      "DataTraceEnabled": false,
+      "HttpMethod": "*",
+      "LoggingLevel": "INFO",
+      "ResourcePath": "/*"
+     }
+    ],
+    "StageName": "development"
+   },
+   "DependsOn": [
+    "RESTAPIsAccount65AC15A0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/DeploymentStage.development/Resource"
+   }
+  },
+  "RESTAPIsbook9E8B5C67": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "RESTAPIs9C880FF1",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "book",
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/Resource"
+   }
+  },
+  "RESTAPIsbookGET7019625D": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "GET",
+    "ResourceId": {
+     "Ref": "RESTAPIsbook9E8B5C67"
+    },
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    },
+    "AuthorizationScopes": [
+     {
+      "Ref": "SsmParameterValueCLAppdevelopmentScopeBookGetNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+     }
+    ],
+    "AuthorizationType": "COGNITO_USER_POOLS",
+    "AuthorizerId": {
+     "Ref": "AuthorizerBD825682"
+    },
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "GatewayIntegrationRole027D7AE3",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+        {
+         "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaBookArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/GET/Resource"
+   }
+  },
+  "RESTAPIsbookPOST39E152A2": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "POST",
+    "ResourceId": {
+     "Ref": "RESTAPIsbook9E8B5C67"
+    },
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    },
+    "AuthorizationScopes": [
+     {
+      "Ref": "SsmParameterValueCLAppdevelopmentScopeBookPostNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+     }
+    ],
+    "AuthorizationType": "COGNITO_USER_POOLS",
+    "AuthorizerId": {
+     "Ref": "AuthorizerBD825682"
+    },
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "GatewayIntegrationRole027D7AE3",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+        {
+         "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaBookArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/POST/Resource"
+   }
+  },
+  "RESTAPIsuser1CBFD157": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "RESTAPIs9C880FF1",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "user",
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/Resource"
+   }
+  },
+  "RESTAPIsuserGET348F95B7": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "GET",
+    "ResourceId": {
+     "Ref": "RESTAPIsuser1CBFD157"
+    },
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    },
+    "AuthorizationScopes": [
+     {
+      "Ref": "SsmParameterValueCLAppdevelopmentScopeUserGetNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+     }
+    ],
+    "AuthorizationType": "COGNITO_USER_POOLS",
+    "AuthorizerId": {
+     "Ref": "AuthorizerBD825682"
+    },
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "GatewayIntegrationRole027D7AE3",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+        {
+         "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaUserArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/GET/Resource"
+   }
+  },
+  "RESTAPIsuserPOST6E9A39B2": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "POST",
+    "ResourceId": {
+     "Ref": "RESTAPIsuser1CBFD157"
+    },
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    },
+    "AuthorizationScopes": [
+     {
+      "Ref": "SsmParameterValueCLAppdevelopmentScopeUserPostNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+     }
+    ],
+    "AuthorizationType": "COGNITO_USER_POOLS",
+    "AuthorizerId": {
+     "Ref": "AuthorizerBD825682"
+    },
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "GatewayIntegrationRole027D7AE3",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+        {
+         "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaUserArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/POST/Resource"
+   }
+  },
+  "RESTAPIsRestApiUrl2629407C": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::Join": [
+      "",
+      [
+       "https://",
+       {
+        "Ref": "RESTAPIs9C880FF1"
+       },
+       ".execute-api.eu-central-1.",
+       {
+        "Ref": "AWS::URLSuffix"
+       },
+       "/",
+       {
+        "Ref": "RESTAPIsDeploymentStagedevelopment26680B7C"
+       },
+       "/"
+      ]
+     ]
+    },
+    "Name": "CLAppdevelopment-REST-APIsRestApiUrl"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/REST-APIsRestApiUrl/Resource"
+   }
+  },
+  "AuthorizerBD825682": {
+   "Type": "AWS::ApiGateway::Authorizer",
+   "Properties": {
+    "Name": "CLAppdevelopmentRestApigatewayStackAuthorizerA48FF36D",
+    "RestApiId": {
+     "Ref": "RESTAPIs9C880FF1"
+    },
+    "Type": "COGNITO_USER_POOLS",
+    "IdentitySource": "method.request.header.Authorization",
+    "ProviderARNs": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":cognito-idp:eu-central-1:693573057868:userpool/",
+        {
+         "Ref": "SsmParameterValueCLAppdevelopmentCognitoUserPoolIdC96584B6F00A464EAD1953AFF4B05118Parameter"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/Authorizer/Resource"
+   }
+  },
+  "GatewayIntegrationRole027D7AE3": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
+    ],
+    "RoleName": "CLAppdevelopment-RestApigatewayStack-GatewayIntegrationRole"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/GatewayIntegrationRole/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/22QwU4DMQxEv6X3bOhW8AELiFtFVcQZuVmzuE3iVeJQlVX+nYSFUiROnnmyR5Os9M1SLxdwjI3pD42lnZ6eBMxBFfQywUgDCB7hpKctRulGUnev/kJ2xnDyou5xtHxyWGShF66kDVjZLMopp2DwFuKv+c6c9RrljfuKfhQPnoSfI4YNs41dKjjQB4avAmeXFYErPdnOgWVmFaOrLwrkhw0EcCjz2dlkZcHtetAPyRsh9rVZriuPScYkf5b/bZyV5x71Pl69t9d61ep2sY9ETSj/Qg71dp6ff2+/cWsBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-RestApigatewayStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "RESTAPIsEndpoint008FA1B6": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "RESTAPIs9C880FF1"
+      },
+      ".execute-api.eu-central-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "RESTAPIsDeploymentStagedevelopment26680B7C"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueCLAppdevelopmentCognitoUserPoolIdC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "CLAppdevelopment-CognitoUserPoolId"
+  },
+  "SsmParameterValueCLAppdevelopmentBackendLambdaBookArnC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "CLAppdevelopment-BackendLambdaBookArn"
+  },
+  "SsmParameterValueCLAppdevelopmentScopeBookGetNameC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "CLAppdevelopment-ScopeBookGetName"
+  },
+  "SsmParameterValueCLAppdevelopmentScopeBookPostNameC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "CLAppdevelopment-ScopeBookPostName"
+  },
+  "SsmParameterValueCLAppdevelopmentBackendLambdaUserArnC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "CLAppdevelopment-BackendLambdaUserArn"
+  },
+  "SsmParameterValueCLAppdevelopmentScopeUserGetNameC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "CLAppdevelopment-ScopeUserGetName"
+  },
+  "SsmParameterValueCLAppdevelopmentScopeUserPostNameC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "CLAppdevelopment-ScopeUserPostName"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

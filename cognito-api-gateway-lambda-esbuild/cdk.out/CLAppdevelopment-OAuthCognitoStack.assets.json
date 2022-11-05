@@ -1,0 +1,20 @@
+{
+  "version": "21.0.0",
+  "files": {
+    "65401d8a8bb5f25b104571ad385fe47257aa1ef2a6910df92875a45d89f0a378": {
+      "source": {
+        "path": "CLAppdevelopment-OAuthCognitoStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "693573057868-eu-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-693573057868-eu-central-1",
+          "objectKey": "65401d8a8bb5f25b104571ad385fe47257aa1ef2a6910df92875a45d89f0a378.json",
+          "region": "eu-central-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-file-publishing-role-693573057868-eu-central-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

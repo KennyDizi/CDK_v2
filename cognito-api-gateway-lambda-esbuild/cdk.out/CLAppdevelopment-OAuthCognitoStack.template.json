@@ -1,0 +1,360 @@
+{
+ "Resources": {
+  "UserPool6BA7E5F2": {
+   "Type": "AWS::Cognito::UserPool",
+   "Properties": {
+    "AccountRecoverySetting": {
+     "RecoveryMechanisms": [
+      {
+       "Name": "verified_phone_number",
+       "Priority": 1
+      },
+      {
+       "Name": "verified_email",
+       "Priority": 2
+      }
+     ]
+    },
+    "AdminCreateUserConfig": {
+     "AllowAdminCreateUserOnly": true
+    },
+    "EmailVerificationMessage": "The verification code to your new account is {####}",
+    "EmailVerificationSubject": "Verify your new account",
+    "SmsVerificationMessage": "The verification code to your new account is {####}",
+    "UserPoolName": "CLAppdevelopment-UserPool",
+    "VerificationMessageTemplate": {
+     "DefaultEmailOption": "CONFIRM_WITH_CODE",
+     "EmailMessage": "The verification code to your new account is {####}",
+     "EmailSubject": "Verify your new account",
+     "SmsMessage": "The verification code to your new account is {####}"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/UserPool/Resource"
+   }
+  },
+  "UserPoolDomainNameEFB8D908": {
+   "Type": "AWS::Cognito::UserPoolDomain",
+   "Properties": {
+    "Domain": "clappdevelopment-api",
+    "UserPoolId": {
+     "Ref": "UserPool6BA7E5F2"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/UserPool/DomainName/Resource"
+   }
+  },
+  "UserPoolResourceServer05D1463A": {
+   "Type": "AWS::Cognito::UserPoolResourceServer",
+   "Properties": {
+    "Identifier": "CLAppdevelopment-API",
+    "Name": "CLAppdevelopment-API",
+    "UserPoolId": {
+     "Ref": "UserPool6BA7E5F2"
+    },
+    "Scopes": [
+     {
+      "ScopeDescription": "client can get book resources.",
+      "ScopeName": "book.get"
+     },
+     {
+      "ScopeDescription": "client can post book resources.",
+      "ScopeName": "book.post"
+     },
+     {
+      "ScopeDescription": "client can get user resources.",
+      "ScopeName": "user.get"
+     },
+     {
+      "ScopeDescription": "client can post user resources.",
+      "ScopeName": "user.post"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/UserPool/ResourceServer/Resource"
+   }
+  },
+  "UserPoolOAuthClient8E1CDCB0": {
+   "Type": "AWS::Cognito::UserPoolClient",
+   "Properties": {
+    "UserPoolId": {
+     "Ref": "UserPool6BA7E5F2"
+    },
+    "AccessTokenValidity": 1440,
+    "AllowedOAuthFlows": [
+     "client_credentials"
+    ],
+    "AllowedOAuthFlowsUserPoolClient": true,
+    "AllowedOAuthScopes": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        {
+         "Ref": "UserPoolResourceServer05D1463A"
+        },
+        "/book.get"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        {
+         "Ref": "UserPoolResourceServer05D1463A"
+        },
+        "/book.post"
+       ]
+      ]
+     }
+    ],
+    "ClientName": "CLAppdevelopment-OAuthClient",
+    "ExplicitAuthFlows": [
+     "ALLOW_CUSTOM_AUTH",
+     "ALLOW_REFRESH_TOKEN_AUTH"
+    ],
+    "GenerateSecret": true,
+    "IdTokenValidity": 1440,
+    "PreventUserExistenceErrors": "ENABLED",
+    "SupportedIdentityProviders": [
+     "COGNITO"
+    ],
+    "TokenValidityUnits": {
+     "AccessToken": "minutes",
+     "IdToken": "minutes"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/UserPool/OAuthClient/Resource"
+   }
+  },
+  "CognitoUserPoolIdE8BC6937": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Ref": "UserPool6BA7E5F2"
+    },
+    "Name": "CLAppdevelopment-CognitoUserPoolId"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/CognitoUserPoolId/Resource"
+   }
+  },
+  "ScopeBookGetName152C0AFD": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::Join": [
+      "",
+      [
+       {
+        "Ref": "UserPoolResourceServer05D1463A"
+       },
+       "/book.get"
+      ]
+     ]
+    },
+    "Name": "CLAppdevelopment-ScopeBookGetName"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/ScopeBookGetName/Resource"
+   }
+  },
+  "ScopeBookPostName8DC4FE63": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::Join": [
+      "",
+      [
+       {
+        "Ref": "UserPoolResourceServer05D1463A"
+       },
+       "/book.post"
+      ]
+     ]
+    },
+    "Name": "CLAppdevelopment-ScopeBookPostName"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/ScopeBookPostName/Resource"
+   }
+  },
+  "ScopeUserGetNameAE9ECA1C": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::Join": [
+      "",
+      [
+       {
+        "Ref": "UserPoolResourceServer05D1463A"
+       },
+       "/user.get"
+      ]
+     ]
+    },
+    "Name": "CLAppdevelopment-ScopeUserGetName"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/ScopeUserGetName/Resource"
+   }
+  },
+  "ScopeUserPostName8084BD8B": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": {
+     "Fn::Join": [
+      "",
+      [
+       {
+        "Ref": "UserPoolResourceServer05D1463A"
+       },
+       "/user.post"
+      ]
+     ]
+    },
+    "Name": "CLAppdevelopment-ScopeUserPostName"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/ScopeUserPostName/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12OzQ6CMBCEn4V7WYHoE+BdAvFsalnJAm1Nf/BA+u6KWEI87cw3k90t4JRBlvCXTUU7pCPdYW4cFwP7oNssdKfIaZivFk2l9cjKh9p0FGctOal99CPR1mi1NwIbNBOaffEvibgcCZXbF1cSmLVy+dCQ6ipuuES3LtxMCIu9ePf03wXxQmBKtwi9PUz5EYoc8qS3RKnxypFEqNf5BhgBS98RAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CLAppdevelopment-OAuthCognitoStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "OutputCognitoUserPoolDomainName": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "UserPoolDomainNameEFB8D908"
+      },
+      ".auth.eu-central-1.amazoncognito.com"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "CLAppdevelopment-CognitoUserPoolDomainName"
+   }
+  },
+  "OutputScopeBookGetName": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      {
+       "Ref": "UserPoolResourceServer05D1463A"
+      },
+      "/book.get"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "CLAppdevelopment-ScopeBookGetName"
+   }
+  },
+  "OutputScopeBookPostName": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      {
+       "Ref": "UserPoolResourceServer05D1463A"
+      },
+      "/book.post"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "CLAppdevelopment-ScopeBookPostName"
+   }
+  },
+  "OutputScopeUserGetName": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      {
+       "Ref": "UserPoolResourceServer05D1463A"
+      },
+      "/user.get"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "CLAppdevelopment-ScopeUserGetName"
+   }
+  },
+  "OutputScopeUserPostName": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      {
+       "Ref": "UserPoolResourceServer05D1463A"
+      },
+      "/user.post"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "CLAppdevelopment-ScopeUserPostName"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

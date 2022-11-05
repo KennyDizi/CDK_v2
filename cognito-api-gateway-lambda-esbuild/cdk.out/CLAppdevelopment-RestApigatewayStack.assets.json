@@ -1,0 +1,20 @@
+{
+  "version": "21.0.0",
+  "files": {
+    "76282cb8577576897220faf1a433e298cc9ebcc3b768e611aae96aaa3298691d": {
+      "source": {
+        "path": "CLAppdevelopment-RestApigatewayStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "693573057868-eu-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-693573057868-eu-central-1",
+          "objectKey": "76282cb8577576897220faf1a433e298cc9ebcc3b768e611aae96aaa3298691d.json",
+          "region": "eu-central-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::693573057868:role/cdk-hnb659fds-file-publishing-role-693573057868-eu-central-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

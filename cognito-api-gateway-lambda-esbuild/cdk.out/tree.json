@@ -9,12 +9,1543 @@
         "path": "Tree",
         "constructInfo": {
           "fqn": "constructs.Construct",
-          "version": "10.1.149"
+          "version": "10.1.150"
         }
       },
-      "CL_CDK_For_Xdevelopment-OAuthCognitoStack": {
-        "id": "CL_CDK_For_Xdevelopment-OAuthCognitoStack",
-        "path": "CL_CDK_For_Xdevelopment-OAuthCognitoStack",
+      "CLAppdevelopment-OAuthCognitoStack": {
+        "id": "CLAppdevelopment-OAuthCognitoStack",
+        "path": "CLAppdevelopment-OAuthCognitoStack",
+        "children": {
+          "UserPool": {
+            "id": "UserPool",
+            "path": "CLAppdevelopment-OAuthCognitoStack/UserPool",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-OAuthCognitoStack/UserPool/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Cognito::UserPool",
+                  "aws:cdk:cloudformation:props": {
+                    "accountRecoverySetting": {
+                      "recoveryMechanisms": [
+                        {
+                          "name": "verified_phone_number",
+                          "priority": 1
+                        },
+                        {
+                          "name": "verified_email",
+                          "priority": 2
+                        }
+                      ]
+                    },
+                    "adminCreateUserConfig": {
+                      "allowAdminCreateUserOnly": true
+                    },
+                    "emailVerificationMessage": "The verification code to your new account is {####}",
+                    "emailVerificationSubject": "Verify your new account",
+                    "smsVerificationMessage": "The verification code to your new account is {####}",
+                    "userPoolName": "CLAppdevelopment-UserPool",
+                    "verificationMessageTemplate": {
+                      "defaultEmailOption": "CONFIRM_WITH_CODE",
+                      "emailMessage": "The verification code to your new account is {####}",
+                      "emailSubject": "Verify your new account",
+                      "smsMessage": "The verification code to your new account is {####}"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.CfnUserPool",
+                  "version": "2.50.0"
+                }
+              },
+              "DomainName": {
+                "id": "DomainName",
+                "path": "CLAppdevelopment-OAuthCognitoStack/UserPool/DomainName",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-OAuthCognitoStack/UserPool/DomainName/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolDomain",
+                      "aws:cdk:cloudformation:props": {
+                        "domain": "clappdevelopment-api",
+                        "userPoolId": {
+                          "Ref": "UserPool6BA7E5F2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cognito.CfnUserPoolDomain",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.UserPoolDomain",
+                  "version": "2.50.0"
+                }
+              },
+              "ResourceServer": {
+                "id": "ResourceServer",
+                "path": "CLAppdevelopment-OAuthCognitoStack/UserPool/ResourceServer",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-OAuthCognitoStack/UserPool/ResourceServer/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolResourceServer",
+                      "aws:cdk:cloudformation:props": {
+                        "identifier": "CLAppdevelopment-API",
+                        "name": "CLAppdevelopment-API",
+                        "userPoolId": {
+                          "Ref": "UserPool6BA7E5F2"
+                        },
+                        "scopes": [
+                          {
+                            "scopeName": "book.get",
+                            "scopeDescription": "client can get book resources."
+                          },
+                          {
+                            "scopeName": "book.post",
+                            "scopeDescription": "client can post book resources."
+                          },
+                          {
+                            "scopeName": "user.get",
+                            "scopeDescription": "client can get user resources."
+                          },
+                          {
+                            "scopeName": "user.post",
+                            "scopeDescription": "client can post user resources."
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cognito.CfnUserPoolResourceServer",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.UserPoolResourceServer",
+                  "version": "2.50.0"
+                }
+              },
+              "OAuthClient": {
+                "id": "OAuthClient",
+                "path": "CLAppdevelopment-OAuthCognitoStack/UserPool/OAuthClient",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-OAuthCognitoStack/UserPool/OAuthClient/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolClient",
+                      "aws:cdk:cloudformation:props": {
+                        "userPoolId": {
+                          "Ref": "UserPool6BA7E5F2"
+                        },
+                        "accessTokenValidity": 1440,
+                        "allowedOAuthFlows": [
+                          "client_credentials"
+                        ],
+                        "allowedOAuthFlowsUserPoolClient": true,
+                        "allowedOAuthScopes": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                {
+                                  "Ref": "UserPoolResourceServer05D1463A"
+                                },
+                                "/book.get"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                {
+                                  "Ref": "UserPoolResourceServer05D1463A"
+                                },
+                                "/book.post"
+                              ]
+                            ]
+                          }
+                        ],
+                        "clientName": "CLAppdevelopment-OAuthClient",
+                        "explicitAuthFlows": [
+                          "ALLOW_CUSTOM_AUTH",
+                          "ALLOW_REFRESH_TOKEN_AUTH"
+                        ],
+                        "generateSecret": true,
+                        "idTokenValidity": 1440,
+                        "preventUserExistenceErrors": "ENABLED",
+                        "supportedIdentityProviders": [
+                          "COGNITO"
+                        ],
+                        "tokenValidityUnits": {
+                          "idToken": "minutes",
+                          "accessToken": "minutes"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cognito.CfnUserPoolClient",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.UserPoolClient",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cognito.UserPool",
+              "version": "2.50.0"
+            }
+          },
+          "CognitoUserPoolId": {
+            "id": "CognitoUserPoolId",
+            "path": "CLAppdevelopment-OAuthCognitoStack/CognitoUserPoolId",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-OAuthCognitoStack/CognitoUserPoolId/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Ref": "UserPool6BA7E5F2"
+                    },
+                    "name": "CLAppdevelopment-CognitoUserPoolId"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "Output-CognitoUserPoolDomainName": {
+            "id": "Output-CognitoUserPoolDomainName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/Output-CognitoUserPoolDomainName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.50.0"
+            }
+          },
+          "Output-ScopeBookGetName": {
+            "id": "Output-ScopeBookGetName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/Output-ScopeBookGetName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.50.0"
+            }
+          },
+          "ScopeBookGetName": {
+            "id": "ScopeBookGetName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/ScopeBookGetName",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-OAuthCognitoStack/ScopeBookGetName/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "UserPoolResourceServer05D1463A"
+                          },
+                          "/book.get"
+                        ]
+                      ]
+                    },
+                    "name": "CLAppdevelopment-ScopeBookGetName"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "Output-ScopeBookPostName": {
+            "id": "Output-ScopeBookPostName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/Output-ScopeBookPostName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.50.0"
+            }
+          },
+          "ScopeBookPostName": {
+            "id": "ScopeBookPostName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/ScopeBookPostName",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-OAuthCognitoStack/ScopeBookPostName/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "UserPoolResourceServer05D1463A"
+                          },
+                          "/book.post"
+                        ]
+                      ]
+                    },
+                    "name": "CLAppdevelopment-ScopeBookPostName"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "Output-ScopeUserGetName": {
+            "id": "Output-ScopeUserGetName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/Output-ScopeUserGetName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.50.0"
+            }
+          },
+          "ScopeUserGetName": {
+            "id": "ScopeUserGetName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/ScopeUserGetName",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-OAuthCognitoStack/ScopeUserGetName/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "UserPoolResourceServer05D1463A"
+                          },
+                          "/user.get"
+                        ]
+                      ]
+                    },
+                    "name": "CLAppdevelopment-ScopeUserGetName"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "Output-ScopeUserPostName": {
+            "id": "Output-ScopeUserPostName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/Output-ScopeUserPostName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.50.0"
+            }
+          },
+          "ScopeUserPostName": {
+            "id": "ScopeUserPostName",
+            "path": "CLAppdevelopment-OAuthCognitoStack/ScopeUserPostName",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-OAuthCognitoStack/ScopeUserPostName/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "UserPoolResourceServer05D1463A"
+                          },
+                          "/user.post"
+                        ]
+                      ]
+                    },
+                    "name": "CLAppdevelopment-ScopeUserPostName"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "CLAppdevelopment-OAuthCognitoStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "CLAppdevelopment-OAuthCognitoStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.150"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.50.0"
+        }
+      },
+      "CLAppdevelopment-BackendLambdaStack": {
+        "id": "CLAppdevelopment-BackendLambdaStack",
+        "path": "CLAppdevelopment-BackendLambdaStack",
+        "children": {
+          "book-api-func": {
+            "id": "book-api-func",
+            "path": "CLAppdevelopment-BackendLambdaStack/book-api-func",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "CLAppdevelopment-BackendLambdaStack/book-api-func/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-BackendLambdaStack/book-api-func/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.50.0"
+                }
+              },
+              "TypeScriptCode": {
+                "id": "TypeScriptCode",
+                "path": "CLAppdevelopment-BackendLambdaStack/book-api-func/TypeScriptCode",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CLAppdevelopment-BackendLambdaStack/book-api-func/TypeScriptCode/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CLAppdevelopment-BackendLambdaStack/book-api-func/TypeScriptCode/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@mrgrain/cdk-esbuild.TypeScriptAsset",
+                  "version": "3.11.3"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-BackendLambdaStack/book-api-func/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-693573057868-eu-central-1",
+                      "s3Key": "11e042fcc88199e16407fe68822baeefa5508d6fb862317205d86eea5a6b17af.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "bookapifuncServiceRole71EBFF13",
+                        "Arn"
+                      ]
+                    },
+                    "functionName": "CLAppdevelopment-book-api-func",
+                    "handler": "handle",
+                    "runtime": "nodejs16.x"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.50.0"
+            }
+          },
+          "BackendLambdaBookArn": {
+            "id": "BackendLambdaBookArn",
+            "path": "CLAppdevelopment-BackendLambdaStack/BackendLambdaBookArn",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-BackendLambdaStack/BackendLambdaBookArn/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Fn::GetAtt": [
+                        "bookapifuncA1B941A7",
+                        "Arn"
+                      ]
+                    },
+                    "name": "CLAppdevelopment-BackendLambdaBookArn"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "user-api-func": {
+            "id": "user-api-func",
+            "path": "CLAppdevelopment-BackendLambdaStack/user-api-func",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "CLAppdevelopment-BackendLambdaStack/user-api-func/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-BackendLambdaStack/user-api-func/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.50.0"
+                }
+              },
+              "TypeScriptCode": {
+                "id": "TypeScriptCode",
+                "path": "CLAppdevelopment-BackendLambdaStack/user-api-func/TypeScriptCode",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CLAppdevelopment-BackendLambdaStack/user-api-func/TypeScriptCode/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CLAppdevelopment-BackendLambdaStack/user-api-func/TypeScriptCode/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@mrgrain/cdk-esbuild.TypeScriptAsset",
+                  "version": "3.11.3"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-BackendLambdaStack/user-api-func/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-693573057868-eu-central-1",
+                      "s3Key": "93cd86f5ed02795bd826b0036a55186de1960049f2d9863c654e5b9f9d949d9b.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "userapifuncServiceRoleB431F559",
+                        "Arn"
+                      ]
+                    },
+                    "functionName": "CLAppdevelopment-user-api-func",
+                    "handler": "handle",
+                    "runtime": "nodejs16.x"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.50.0"
+            }
+          },
+          "BackendLambdaUserArn": {
+            "id": "BackendLambdaUserArn",
+            "path": "CLAppdevelopment-BackendLambdaStack/BackendLambdaUserArn",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-BackendLambdaStack/BackendLambdaUserArn/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Fn::GetAtt": [
+                        "userapifuncC8DEF36E",
+                        "Arn"
+                      ]
+                    },
+                    "name": "CLAppdevelopment-BackendLambdaUserArn"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "CLAppdevelopment-BackendLambdaStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "CLAppdevelopment-BackendLambdaStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.150"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.50.0"
+        }
+      },
+      "CLAppdevelopment-RestApigatewayStack": {
+        "id": "CLAppdevelopment-RestApigatewayStack",
+        "path": "CLAppdevelopment-RestApigatewayStack",
+        "children": {
+          "REST-APIs": {
+            "id": "REST-APIs",
+            "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "description": "This is a public REST APIs, but clients must have a valid access-token with scopes",
+                    "name": "CLAppdevelopment-REST-APIs"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.50.0"
+                }
+              },
+              "CloudWatchRole": {
+                "id": "CloudWatchRole",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/CloudWatchRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/CloudWatchRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "apigateway.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.50.0"
+                }
+              },
+              "Account": {
+                "id": "Account",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Account",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::Account",
+                  "aws:cdk:cloudformation:props": {
+                    "cloudWatchRoleArn": {
+                      "Fn::GetAtt": [
+                        "RESTAPIsCloudWatchRole9D502FE8",
+                        "Arn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnAccount",
+                  "version": "2.50.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "RESTAPIs9C880FF1"
+                        },
+                        "description": "This is a public REST APIs, but clients must have a valid access-token with scopes"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.50.0"
+                }
+              },
+              "DeploymentStage.development": {
+                "id": "DeploymentStage.development",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/DeploymentStage.development",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/DeploymentStage.development/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "RESTAPIs9C880FF1"
+                        },
+                        "deploymentId": {
+                          "Ref": "RESTAPIsDeployment781C9FFE1f68ea61c79abc72c0a62d4e53ae48a4"
+                        },
+                        "methodSettings": [
+                          {
+                            "httpMethod": "*",
+                            "resourcePath": "/*",
+                            "dataTraceEnabled": false,
+                            "loggingLevel": "INFO"
+                          }
+                        ],
+                        "stageName": "development"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.50.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.50.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default",
+                "children": {
+                  "book": {
+                    "id": "book",
+                    "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "RESTAPIs9C880FF1",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "book",
+                            "restApiId": {
+                              "Ref": "RESTAPIs9C880FF1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "GET": {
+                        "id": "GET",
+                        "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/GET",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/GET/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "GET",
+                                "resourceId": {
+                                  "Ref": "RESTAPIsbook9E8B5C67"
+                                },
+                                "restApiId": {
+                                  "Ref": "RESTAPIs9C880FF1"
+                                },
+                                "authorizationScopes": [
+                                  {
+                                    "Ref": "SsmParameterValueCLAppdevelopmentScopeBookGetNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                  }
+                                ],
+                                "authorizationType": "COGNITO_USER_POOLS",
+                                "authorizerId": {
+                                  "Ref": "AuthorizerBD825682"
+                                },
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaBookArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST",
+                                  "credentials": {
+                                    "Fn::GetAtt": [
+                                      "GatewayIntegrationRole027D7AE3",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.50.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "POST": {
+                        "id": "POST",
+                        "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/POST",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/book/POST/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "POST",
+                                "resourceId": {
+                                  "Ref": "RESTAPIsbook9E8B5C67"
+                                },
+                                "restApiId": {
+                                  "Ref": "RESTAPIs9C880FF1"
+                                },
+                                "authorizationScopes": [
+                                  {
+                                    "Ref": "SsmParameterValueCLAppdevelopmentScopeBookPostNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                  }
+                                ],
+                                "authorizationType": "COGNITO_USER_POOLS",
+                                "authorizerId": {
+                                  "Ref": "AuthorizerBD825682"
+                                },
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaBookArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST",
+                                  "credentials": {
+                                    "Fn::GetAtt": [
+                                      "GatewayIntegrationRole027D7AE3",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.50.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Resource",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "user": {
+                    "id": "user",
+                    "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "RESTAPIs9C880FF1",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "user",
+                            "restApiId": {
+                              "Ref": "RESTAPIs9C880FF1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "GET": {
+                        "id": "GET",
+                        "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/GET",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/GET/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "GET",
+                                "resourceId": {
+                                  "Ref": "RESTAPIsuser1CBFD157"
+                                },
+                                "restApiId": {
+                                  "Ref": "RESTAPIs9C880FF1"
+                                },
+                                "authorizationScopes": [
+                                  {
+                                    "Ref": "SsmParameterValueCLAppdevelopmentScopeUserGetNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                  }
+                                ],
+                                "authorizationType": "COGNITO_USER_POOLS",
+                                "authorizerId": {
+                                  "Ref": "AuthorizerBD825682"
+                                },
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaUserArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST",
+                                  "credentials": {
+                                    "Fn::GetAtt": [
+                                      "GatewayIntegrationRole027D7AE3",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.50.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "POST": {
+                        "id": "POST",
+                        "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/POST",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "CLAppdevelopment-RestApigatewayStack/REST-APIs/Default/user/POST/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "POST",
+                                "resourceId": {
+                                  "Ref": "RESTAPIsuser1CBFD157"
+                                },
+                                "restApiId": {
+                                  "Ref": "RESTAPIs9C880FF1"
+                                },
+                                "authorizationScopes": [
+                                  {
+                                    "Ref": "SsmParameterValueCLAppdevelopmentScopeUserPostNameC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                  }
+                                ],
+                                "authorizationType": "COGNITO_USER_POOLS",
+                                "authorizerId": {
+                                  "Ref": "AuthorizerBD825682"
+                                },
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Ref": "SsmParameterValueCLAppdevelopmentBackendLambdaUserArnC96584B6F00A464EAD1953AFF4B05118Parameter"
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST",
+                                  "credentials": {
+                                    "Fn::GetAtt": [
+                                      "GatewayIntegrationRole027D7AE3",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.50.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Resource",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.RestApi",
+              "version": "2.50.0"
+            }
+          },
+          "REST-APIsRestApiUrl": {
+            "id": "REST-APIsRestApiUrl",
+            "path": "CLAppdevelopment-RestApigatewayStack/REST-APIsRestApiUrl",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-RestApigatewayStack/REST-APIsRestApiUrl/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "https://",
+                          {
+                            "Ref": "RESTAPIs9C880FF1"
+                          },
+                          ".execute-api.eu-central-1.",
+                          {
+                            "Ref": "AWS::URLSuffix"
+                          },
+                          "/",
+                          {
+                            "Ref": "RESTAPIsDeploymentStagedevelopment26680B7C"
+                          },
+                          "/"
+                        ]
+                      ]
+                    },
+                    "name": "CLAppdevelopment-REST-APIsRestApiUrl"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-CognitoUserPoolId:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:CLAppdevelopment-CognitoUserPoolId:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-CognitoUserPoolId:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-CognitoUserPoolId:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:CLAppdevelopment-CognitoUserPoolId:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-CognitoUserPoolId:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "UserPool": {
+            "id": "UserPool",
+            "path": "CLAppdevelopment-RestApigatewayStack/UserPool",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "Authorizer": {
+            "id": "Authorizer",
+            "path": "CLAppdevelopment-RestApigatewayStack/Authorizer",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-RestApigatewayStack/Authorizer/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::Authorizer",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "CLAppdevelopmentRestApigatewayStackAuthorizerA48FF36D",
+                    "restApiId": {
+                      "Ref": "RESTAPIs9C880FF1"
+                    },
+                    "type": "COGNITO_USER_POOLS",
+                    "identitySource": "method.request.header.Authorization",
+                    "providerArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":cognito-idp:eu-central-1:693573057868:userpool/",
+                            {
+                              "Ref": "SsmParameterValueCLAppdevelopmentCognitoUserPoolIdC96584B6F00A464EAD1953AFF4B05118Parameter"
+                            }
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnAuthorizer",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.CognitoUserPoolsAuthorizer",
+              "version": "2.50.0"
+            }
+          },
+          "GatewayIntegrationRole": {
+            "id": "GatewayIntegrationRole",
+            "path": "CLAppdevelopment-RestApigatewayStack/GatewayIntegrationRole",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CLAppdevelopment-RestApigatewayStack/GatewayIntegrationRole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "apigateway.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "managedPolicyArns": [
+                      "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
+                    ],
+                    "roleName": "CLAppdevelopment-RestApigatewayStack-GatewayIntegrationRole"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-BackendLambdaBookArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:CLAppdevelopment-BackendLambdaBookArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-BackendLambdaBookArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-BackendLambdaBookArn:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:CLAppdevelopment-BackendLambdaBookArn:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-BackendLambdaBookArn:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "book-func": {
+            "id": "book-func",
+            "path": "CLAppdevelopment-RestApigatewayStack/book-func",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.FunctionBase",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeBookGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeBookGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeBookGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeBookGetName:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeBookGetName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeBookGetName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeBookPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeBookPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeBookPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeBookPostName:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeBookPostName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeBookPostName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-BackendLambdaUserArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:CLAppdevelopment-BackendLambdaUserArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-BackendLambdaUserArn:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-BackendLambdaUserArn:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:CLAppdevelopment-BackendLambdaUserArn:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-BackendLambdaUserArn:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "user-func": {
+            "id": "user-func",
+            "path": "CLAppdevelopment-RestApigatewayStack/user-func",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.FunctionBase",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeUserGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeUserGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeUserGetName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeUserGetName:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeUserGetName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeUserGetName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeUserPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeUserPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeUserPostName:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.50.0"
+            }
+          },
+          "SsmParameterValue:CLAppdevelopment-ScopeUserPostName:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:CLAppdevelopment-ScopeUserPostName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "CLAppdevelopment-RestApigatewayStack/SsmParameterValue:CLAppdevelopment-ScopeUserPostName:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.50.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "CLAppdevelopment-RestApigatewayStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "CLAppdevelopment-RestApigatewayStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.150"
+            }
+          }
+        },
         "constructInfo": {
           "fqn": "aws-cdk-lib.Stack",
           "version": "2.50.0"
